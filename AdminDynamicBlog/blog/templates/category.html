@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{seo_meta.title}}{% endblock %}
+
+{% block seo %}
+  <meta name="title" content="{{seo_meta.title}}">
+  <meta name="description" content="{{seo_meta.description}}">
+  <meta name="keywords" content="{{seo_meta.keywords}}">
+  <meta name="og:title" content="{{seo_meta.og_title}}">
+  <meta name="og:url" content="{{seo_meta.og_url}}">
+  <meta name="og:image" content="{{seo_meta.og_image}}">
+  <meta name="og:image:type" content="{{seo_meta.og_image_type}}">
+  <meta name="og:image:width" content="{{seo_meta.og_image_width}}">
+  <meta name="og:image:height" content="{{seo_meta.og_image_height}}">
+  <meta name="og:type" content="{{seo_meta.og_type}}">
+  <meta name="og:locale" content="{{seo_meta.og_locale}}">
+  <meta name="og:image:url" content="{{seo_meta.og_image_url}}">
+  <meta name="og:image:secure_url" content="{{seo_meta.og_image_secure_url}}">
+  <meta name="og:site_name" content="{{seo_meta.og_site_name}}">
+  <meta name="og:see_also" content="{{seo_meta.og_see_also}}">
+  <meta name="article:author" content="{{seo_meta.article_author}}">
+  <meta name="format:detection" content="{{seo_meta.format_detection}}">
+{% endblock %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'assets/img/blog-header.jpg' %}');">
+  <div class="container position-relative d-flex flex-column align-items-center">
+    <h2>{{category}}</h2>
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li>{{category}}</li>
+    </ol>
+  </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Blog Section ======= -->
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+    <div class="row g-5">
+      <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+        <div class="row gy-5 posts-list">
+          {% for article in articles %}
+          <div class="col-lg-6">
+            <article class="d-flex flex-column">
+              <div class="post-img">
+                <img src="{{ article.image.url }}" alt="{{ article.article_title_h1 }}" class="img-fluid rounded">
+              </div>
+              <h2 class="title">
+                <a href="{% url 'article_detail' article.article_slug %}">{{ article.article_title_h1 }}</a>
+              </h2>
+              <div class="meta-top">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'article_detail' article.article_slug %}">{{ article.author_name }}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'article_detail' article.article_slug %}"><time datetime="{{ article.article_date }}">{{ article.article_date|date:"M d, Y" }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'article_detail' article.article_slug %}">{{ article.comments.count }} Comments</a></li>
+                </ul>
+              </div>
+              <div class="content">
+                <p>
+                  {{ article.article_short_description }}
+                </p>
+              </div>
+              <div class="read-more mt-auto align-self-end">
+                <a href="{% url 'article_detail' article.article_slug %}">Read More <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </article>
+          </div><!-- End post list item -->
+          {% endfor %}
+        </div><!-- End blog posts list -->
+
+        <div class="blog-pagination">
+          <ul class="justify-content-center">
+            <li><a href="#">1</a></li>
+            <li class="active"><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+          </ul>
+        </div><!-- End blog pagination -->
+
+      </div>
+
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="sidebar ps-lg-4">
+          <div class="sidebar-item search-form">
+            <h3 class="sidebar-title">Search</h3>
+            <form action="" class="mt-3">
+              <input type="text">
+              <button type="submit"><i class="bi bi-search"></i></button>
+            </form>
+          </div><!-- End sidebar search formn-->
+
+          <div class="sidebar-item categories">
+              <h3 class="sidebar-title">Categories</h3>
+              <ul class="mt-3">
+                  {% for category in categories %}
+                      <li><a href="/category/{{ category.category_name }}/">{{ category.category_name }} <span>({{ category.article_count }})</span></a></li>
+                  {% endfor %}
+              </ul>
+          </div><!-- End sidebar categories-->
+
+          <div class="sidebar-item recent-posts">
+            <h3 class="sidebar-title">Recent Posts</h3>
+            <div class="mt-3">
+              {% for recent_article in recent_posts %}
+              <div class="post-item mt-3">
+                <img src="{{ recent_article.image.url }}" alt="{{ recent_article.article_title_h1 }}" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'article_detail' recent_article.article_slug %}">{{ recent_article.article_title_h1 }}</a></h4>
+                  <time datetime="{{ recent_article.article_date }}">{{ recent_article.article_date|date:"M d, Y" }}</time>
+                </div>
+              </div><!-- End recent post item-->
+              {% endfor %}
+            </div>
+          </div><!-- End sidebar recent posts-->
+
+        </div><!-- End Blog Sidebar -->
+      </div>
+    </div>
+  </div>
+</section><!-- End Blog Section -->
+{% endblock %}

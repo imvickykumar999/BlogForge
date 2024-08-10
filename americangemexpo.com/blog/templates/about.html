@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+
+{% block seo %}
+  <meta name="title" content="{{seo_meta.title}}">
+  <meta name="description" content="{{seo_meta.description}}">
+  <meta name="keywords" content="{{seo_meta.keywords}}">
+  <meta name="og:title" content="{{seo_meta.og_title}}">
+  <meta name="og:url" content="{{seo_meta.og_url}}">
+  <meta name="og:image" content="{{seo_meta.og_image}}">
+  <meta name="og:image:type" content="{{seo_meta.og_image_type}}">
+  <meta name="og:image:width" content="{{seo_meta.og_image_width}}">
+  <meta name="og:image:height" content="{{seo_meta.og_image_height}}">
+  <meta name="og:type" content="{{seo_meta.og_type}}">
+  <meta name="og:locale" content="{{seo_meta.og_locale}}">
+  <meta name="og:image:url" content="{{seo_meta.og_image_url}}">
+  <meta name="og:image:secure_url" content="{{seo_meta.og_image_secure_url}}">
+  <meta name="og:site_name" content="{{seo_meta.og_site_name}}">
+  <meta name="og:see_also" content="{{seo_meta.og_see_also}}">
+  <meta name="article:author" content="{{seo_meta.article_author}}">
+  <meta name="format:detection" content="{{seo_meta.format_detection}}">
+{% endblock %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'assets/img/about-header.jpg' %}');">
+  <div class="container position-relative d-flex flex-column align-items-center">
+    <h2>About</h2>
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li>About</li>
+    </ol>
+  </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= About Section ======= -->
+<section id="about" class="about pb-lg-0">
+  <div class="container" data-aos="fade-up">
+    <div class="row gy-4" data-aos="fade-up">
+      <div class="col-lg-4">
+        <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid rounded" alt="">
+      </div>
+      <div class="col-lg-8">
+        <div class="content ps-lg-5">
+          <h3>{{static_content.heading}}</h3>
+          <p>{{static_content.content}}</p>
+          <ul>
+            {% for item in list_items %}
+              <li><i class="bi bi-check-circle-fill"></i> {{ item.content }} </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- End About Section -->
+
+<!-- ======= Why Choose Us Section ======= -->
+<section id="why-us" class="why-us">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2>Why Choose Us</h2>
+    </div>
+    <div class="row g-0" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-xl-5 img-bg" style="background-image: url('{% static 'assets/img/why-us-bg.jpg' %}')"></div>
+      <div class="col-xl-7 slides  position-relative">
+        <div class="slides-1 swiper">
+          <div class="swiper-wrapper">
+
+            {% for slider in sliders %}
+              <div class="swiper-slide">
+                <div class="item">
+                  <h3 class="mb-3">{{ slider.title }}</h3>
+                  <h4 class="mb-3">{{ slider.subtitle }}</h4>
+                  <p>{{ slider.description }}</p>
+                </div>
+              </div><!-- End slide item -->
+            {% endfor %}
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </div>
+</section><!-- End Why Choose Us Section -->
+
+<!-- ======= Call To Action Section ======= -->
+<section id="call-to-action" class="call-to-action">
+  <div class="container" data-aos="fade-up">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 text-center">
+        <h3>{{call2action.calltoaction}}</h3>
+        <p>{{call2action.calltoaction_p}}</p>
+        <a class="cta-btn" href="/contact/">Call To Action</a>
+      </div>
+    </div>
+  </div>
+</section><!-- End Call To Action Section -->
+
+<!-- ======= Team Section ======= -->
+<section id="team" class="team pt-5">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2>Our Team</h2>
+    </div>
+    <div class="row gy-4">
+      {% for member in team_members %}
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+        <div class="team-member">
+          <div class="member-img">
+              <img src="{{ member.image.url }}" class="img-fluid" alt="{{ member.name }}">
+            <div class="social">
+              {% if member.twitter_link %}
+                <a target="_blank" href="{{ member.twitter_link }}"><i class="bi bi-twitter"></i></a>
+              {% endif %}
+              {% if member.facebook_link %}
+                <a target="_blank" href="{{ member.facebook_link }}"><i class="bi bi-facebook"></i></a>
+              {% endif %}
+              {% if member.instagram_link %}
+                <a target="_blank" href="{{ member.instagram_link }}"><i class="bi bi-instagram"></i></a>
+              {% endif %}
+              {% if member.linkedin_link %}
+                <a target="_blank" href="{{ member.linkedin_link }}"><i class="bi bi-linkedin"></i></a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="member-info">
+            <h4>{{ member.name }}</h4>
+            <span>{{ member.designation }}</span>
+          </div>
+        </div>
+      </div><!-- End Team Member -->
+      {% endfor %}
+    </div>
+  </div>
+</section><!-- End Team Section -->
+
+{% endblock %}

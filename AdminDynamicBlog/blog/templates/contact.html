@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block seo %}
+  <meta name="title" content="{{seo_meta.title}}">
+  <meta name="description" content="{{seo_meta.description}}">
+  <meta name="keywords" content="{{seo_meta.keywords}}">
+  <meta name="og:title" content="{{seo_meta.og_title}}">
+  <meta name="og:url" content="{{seo_meta.og_url}}">
+  <meta name="og:image" content="{{seo_meta.og_image}}">
+  <meta name="og:image:type" content="{{seo_meta.og_image_type}}">
+  <meta name="og:image:width" content="{{seo_meta.og_image_width}}">
+  <meta name="og:image:height" content="{{seo_meta.og_image_height}}">
+  <meta name="og:type" content="{{seo_meta.og_type}}">
+  <meta name="og:locale" content="{{seo_meta.og_locale}}">
+  <meta name="og:image:url" content="{{seo_meta.og_image_url}}">
+  <meta name="og:image:secure_url" content="{{seo_meta.og_image_secure_url}}">
+  <meta name="og:site_name" content="{{seo_meta.og_site_name}}">
+  <meta name="og:see_also" content="{{seo_meta.og_see_also}}">
+  <meta name="article:author" content="{{seo_meta.article_author}}">
+  <meta name="format:detection" content="{{seo_meta.format_detection}}">
+{% endblock %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'assets/img/contact-header.jpg' %}');">
+  <div class="container position-relative d-flex flex-column align-items-center">
+    <h2>Contact</h2>
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li>Contact</li>
+    </ol>
+  </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact">
+  <div class="container position-relative" data-aos="fade-up">
+    <div class="row gy-4 d-flex justify-content-end">
+      <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="info-item d-flex">
+          <i class="bi bi-geo-alt flex-shrink-0"></i>
+          <div>
+            <h4>Location:</h4>
+            <p>{{static_content.location}}</p>
+          </div>
+        </div><!-- End Info Item -->
+
+        <div class="info-item d-flex">
+          <i class="bi bi-envelope flex-shrink-0"></i>
+          <div>
+            <h4>Email:</h4>
+            <p>{{static_content.email}}</p>
+          </div>
+        </div><!-- End Info Item -->
+
+        <div class="info-item d-flex">
+          <i class="bi bi-phone flex-shrink-0"></i>
+          <div>
+            <h4>Call:</h4>
+            <p>{{static_content.call}}</p>
+          </div>
+        </div><!-- End Info Item -->
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
+        <form action="{% url 'contact' %}" method="post" >
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+              <input type="email" class="form-control" name="mailid" id="mailid" placeholder="Your Email" required>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone" pattern="[0-9]*" inputmode="numeric" required>
+          </div>
+          <div class="form-group mt-3">
+            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+          </div>
+          <div class="form-group mt-3">
+            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+          </div>
+          <div class="my-3">
+            {% if success_message %}
+              <div class="sent-message">{{ success_message }}</div>
+            {% endif %}
+          </div>
+
+          <div class="inputField">
+            <script src="https://www.google.com/recaptcha/api.js"></script>
+            <div class="g-recaptcha" data-sitekey="6LdWu9YiAAAAAH2hGK-j7Psucc7gTwwAYzh4dkjA"
+            data-callback="verifyCaptcha" required ></div>
+            <div id="g-recaptcha-error"></div>
+          </div> <br>
+          
+          <div class="text-right"><button type="submit" class="btn btn-primary">Send Message</button></div>
+        </form>
+      </div><!-- End Contact Form -->
+    </div>
+  </div>
+</section><!-- End Contact Section -->
+{% endblock %}

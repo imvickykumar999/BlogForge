@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block seo %}
+  <meta name="title" content="{{seo_meta.title}}">
+  <meta name="description" content="{{seo_meta.description}}">
+  <meta name="keywords" content="{{seo_meta.keywords}}">
+  <meta name="og:title" content="{{seo_meta.og_title}}">
+  <meta name="og:url" content="{{seo_meta.og_url}}">
+  <meta name="og:image" content="{{seo_meta.og_image}}">
+  <meta name="og:image:type" content="{{seo_meta.og_image_type}}">
+  <meta name="og:image:width" content="{{seo_meta.og_image_width}}">
+  <meta name="og:image:height" content="{{seo_meta.og_image_height}}">
+  <meta name="og:type" content="{{seo_meta.og_type}}">
+  <meta name="og:locale" content="{{seo_meta.og_locale}}">
+  <meta name="og:image:url" content="{{seo_meta.og_image_url}}">
+  <meta name="og:image:secure_url" content="{{seo_meta.og_image_secure_url}}">
+  <meta name="og:site_name" content="{{seo_meta.og_site_name}}">
+  <meta name="og:see_also" content="{{seo_meta.og_see_also}}">
+  <meta name="article:author" content="{{seo_meta.article_author}}">
+  <meta name="format:detection" content="{{seo_meta.format_detection}}">
+{% endblock %}
+
+{% block content %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-4">
+        <h2 data-aos="fade-up">{{static_content.heading}}</h2>
+        <blockquote data-aos="fade-up" data-aos-delay="100">
+          <p>{{static_content.content_p1}}</p>
+          <p>{{static_content.content_p2}}</p>
+        </blockquote>
+        <div class="d-flex banner-content" data-aos="fade-up" data-aos-delay="200">
+          <a href="/about/" class="btn-get-started">Get Started</a>
+          <a href="{{static_content.youtube_url}}" class="glightbox btn-watch-video d-flex align-items-center play-btn"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- End Hero Section -->
+
+<main id="main">
+
+  <!-- ======= Why Choose Us Section ======= -->
+  <section id="why-us" class="why-us">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-header">
+        <h2>Why Choose Us</h2>
+      </div>
+
+      <div class="row g-0" data-aos="fade-up" data-aos-delay="200">
+        <div class="col-xl-5 img-bg" style="background-image: url('{% static 'assets/img/why-us-bg.jpg' %}')"></div>
+        <div class="col-xl-7 slides position-relative">
+
+          <div class="slides-1 swiper">
+            <div class="swiper-wrapper">
+
+              {% for slider in sliders %}
+                <div class="swiper-slide">
+                  <div class="item">
+                    <h3 class="mb-3">{{ slider.title }}</h3>
+                    <h4 class="mb-3">{{ slider.subtitle }}</h4>
+                    <p>{{ slider.description }}</p>
+                  </div>
+                </div><!-- End slide item -->
+              {% endfor %}
+
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Why Choose Us Section -->
+
+
+  <!-- ======= Call To Action Section ======= -->
+  <section id="call-to-action" class="call-to-action">
+    <div class="container" data-aos="fade-up">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+          <h3>{{call2action.calltoaction}}</h3>
+          <p>{{call2action.calltoaction_p}}</p>
+          <a class="cta-btn" href="/contact/">Call To Action</a>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Call To Action Section -->
+
+  <!-- ======= Recent Blog Posts Section ======= -->
+  <section id="recent-posts" class="recent-posts">
+    <div class="container" data-aos="fade-up">
+      <div class="section-header">
+        <h2>Recent Blog Posts</h2>
+      </div>
+      <div class="row gy-5 mb-5">
+        {% for article in articles %}
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="post-box">
+            <div class="post-img"><img src="{{ article.image.url }}" class="img-fluid rounded" alt="{{ article.article_title_h1 }}"></div>
+            <div class="meta">
+              <span class="post-date">{{ article.article_date }}</span>
+              <span class="post-author"> / {{ article.author_name }}</span>
+            </div>
+            <h3 class="post-title">{{ article.article_title_h1 }}</h3>
+            <p>{{ article.article_short_description }}</p>
+            <a href="{% url 'article_detail' article.article_slug %}" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- End Recent Blog Posts Section -->
+
+</main><!-- End #main -->
+{% endblock %}
