@@ -14,6 +14,7 @@ urlpatterns = [
     path('category/<str:category>/', blog_views.category, name='category'),
     path('blogs/<slug:article_slug>/', blog_views.blog_details, name='article_detail'),
     re_path(r'^robots\.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    re_path(r'^Ads\.txt$', TemplateView.as_view(template_name="Ads.txt", content_type="text/plain")),
     path('', include('app.urls')),
 ]
 
