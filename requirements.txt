@@ -3,3 +3,4 @@ django
 django-ckeditor
 django-jazzmin
 Pillow
+django-recaptcha
