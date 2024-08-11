@@ -8,7 +8,7 @@ class CallToActionAdmin(admin.ModelAdmin):
 
 @admin.register(Footer)
 class FooterAdmin(admin.ModelAdmin):
-    list_display = ('base_content', 'location', 'email', 'call', 'twitter_url', 'facebook_url', 'instagram_url', 'linkedin_url')
+    list_display = ('call', 'location', 'email', 'base_content')
     search_fields = ('base_content', 'location', 'email', 'call', 'twitter_url', 'facebook_url', 'instagram_url', 'linkedin_url')
 
 @admin.register(AboutListItem)

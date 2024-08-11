@@ -1,8 +1,21 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Article, ContactQueries, BlogCategory, OurTeam, SEOmeta, StaticContentHome, StaticContentContact, StaticContentAbout, Footer, WhyChooseMeSlider, AboutListItem, CallToAction
-from .forms import CommentForm
-import urllib.request
-import json
+from .forms import CommentForm, ContactForm
+
+from .models import (
+    Article, 
+    ContactQueries, 
+    BlogCategory, 
+    OurTeam, 
+    SEOmeta, 
+    StaticContentHome, 
+    StaticContentContact, 
+    StaticContentAbout, 
+    Footer, 
+    WhyChooseMeSlider, 
+    AboutListItem, 
+    CallToAction
+)
 
 def home(request):
     articles = Article.objects.all().order_by('-article_date')[:16]
@@ -28,37 +41,23 @@ def home(request):
     })
 
 def contact(request):
-    recaptcha_response = request.POST.get('g-recaptcha-response')
-    url = 'https://www.google.com/recaptcha/api/siteverify'
-
-    values = {
-        'secret': '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',
-        'response': recaptcha_response
-    }
-
-    data = urllib.parse.urlencode(values).encode()
-    req = urllib.request.Request(url, data=data)
-    response = urllib.request.urlopen(req)
-
     success_message = None
-    result = json.loads(response.read().decode())
-    # if result['success']:
-
     if request.method == 'POST':
-        name = request.POST.get('name')
-        mailid = request.POST.get('mailid')
-        phone = request.POST.get('phone')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
-
-        ContactQueries.objects.create(
-            name=name,
-            mailid=mailid,
-            phone=phone,
-            subject=subject,
-            message=message
-        )
-        success_message = "Your message has been sent. Thank you!"
+        form = ContactForm(request.POST) 
+        
+        if form.is_valid():
+            ContactQueries.objects.create(
+                name=form.cleaned_data['name'],
+                mailid=form.cleaned_data['mailid'],
+                phone=form.cleaned_data['phone'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message']
+            )
+            success_message = "Your message has been sent. Thank you!"
+        else:
+            success_message = "reCAPTCHA Failed!"
+    else:
+        form = ContactForm() 
 
     try:
         seo_meta = SEOmeta.objects.get(page_name='contact')
@@ -70,6 +69,7 @@ def contact(request):
 
     active_contact = 'active'
     return render(request, 'contact.html', {
+        'form': form,
         'success_message': success_message,
         'seo_meta': seo_meta,
         'static_content': static_content,
@@ -80,9 +80,23 @@ def contact(request):
 def category(request, category):
     category = get_object_or_404(BlogCategory, category_name=category)
     recent_posts = Article.objects.all().order_by('-article_date')[:10]
-    articles = Article.objects.filter(category_name=category)
     categories = BlogCategory.objects.all()
     footer = Footer.objects.first()
+    query = request.GET.get('q', '')
+    articles = Article.objects.filter(category_name=category)
+    
+    if query:
+        articles = articles.filter(article_title_h1__icontains=query)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(articles, 2)
+
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
 
     try:
         seo_meta = SEOmeta.objects.get(page_name='category')
@@ -96,18 +110,33 @@ def category(request, category):
         'recent_posts': recent_posts,
         'seo_meta': seo_meta,
         'footer': footer,
+        'query': query,
     })
 
 def blogs(request):
     categories = BlogCategory.objects.all()
     recent_posts = Article.objects.all().order_by('-article_date')[:10]
     category_slug = request.GET.get('category')
+    query = request.GET.get('q', '')
     articles = Article.objects.all().order_by('-article_date')
     footer = Footer.objects.first()
 
     if category_slug:
         category = get_object_or_404(BlogCategory, slug=category_slug)
         articles = articles.filter(category_name=category)
+
+    if query:
+        articles = articles.filter(article_title_h1__icontains=query)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(articles, 2)
+
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
 
     try:
         seo_meta = SEOmeta.objects.get(page_name='blog')
@@ -122,6 +151,7 @@ def blogs(request):
         'seo_meta': seo_meta,
         'footer': footer,
         'active_blogs': active_blogs,
+        'query': query,
     })
 
 def about(request):

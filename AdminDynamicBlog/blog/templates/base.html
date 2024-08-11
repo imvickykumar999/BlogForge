@@ -50,7 +50,7 @@
       <a href="/" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="{% static 'assets/img/logo.png" alt=""> -->
-        <h1 class="d-flex align-items-center">KYRIE-4</h1>
+        <h1 class="d-flex align-items-center">Vicks</h1>
       </a>
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
@@ -82,7 +82,7 @@
         <div class="row gy-4">
           <div class="col-lg-6 col-md-12 footer-info pe-5">
             <a href="/" class="logo d-flex align-items-center">
-              <span>KYRIE-4</span>
+              <span>Vicks</span>
             </a>
             <p>{{footer.base_content}}</p>
             <div class="social-links d-flex mt-3">
@@ -118,7 +118,7 @@
     <div class="footer-legal">
       <div class="container">
         <div class="copyright">
-          &copy; Copyright <strong><span>KYRIE-4</span></strong>. All Rights Reserved
+          &copy; Copyright <strong><span id="current-year"></span></strong> | All Rights Reserved
         </div>
       </div>
     </div>
@@ -139,6 +139,11 @@
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
 
+  <script>
+    // Get the current year
+    const year = new Date().getFullYear();
+    // Set the year in the span with id 'current-year'
+    document.getElementById('current-year').textContent = year;
+  </script>
 </body>
-
 </html>

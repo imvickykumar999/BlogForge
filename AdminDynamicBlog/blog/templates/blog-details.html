@@ -105,55 +105,58 @@
           <div class="reply-form">
             <h4>Leave a Reply</h4>
             <p>Your email address will not be published. Required fields are marked * </p>
-            <form action="" method="post">
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input name="name" type="text" class="form-control" placeholder="Your Name*">
-                  {% if comment_form.name.errors %}
-                    <div class="text-danger">{{ comment_form.name.errors }}</div>
-                  {% endif %}
-                </div>
-                <div class="col-md-6 form-group">
-                  <input name="email" type="email" class="form-control" placeholder="Your Email*">
-                  {% if comment_form.email.errors %}
-                    <div class="text-danger">{{ comment_form.email.errors }}</div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <input name="website" type="text" class="form-control" placeholder="Your Website">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <textarea name="body" class="form-control" placeholder="Your Comment*"></textarea>
-                  {% if comment_form.body.errors %}
-                    <div class="text-danger">{{ comment_form.body.errors }}</div>
-                  {% endif %}
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary">Post Comment</button>
-            </form>
+              <form action="" method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                      <div class="col-md-6 form-group">
+                          <input name="name" type="text" class="form-control" placeholder="Your Name*">
+                          {% if comment_form.name.errors %}
+                              <div class="text-danger">{{ comment_form.name.errors }}</div>
+                          {% endif %}
+                      </div>
+                      <div class="col-md-6 form-group">
+                          <input name="email" type="email" class="form-control" placeholder="Your Email*">
+                          {% if comment_form.email.errors %}
+                              <div class="text-danger">{{ comment_form.email.errors }}</div>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col form-group">
+                          <input name="website" type="text" class="form-control" placeholder="Your Website">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col form-group">
+                          <textarea name="body" class="form-control" placeholder="Your Comment*"></textarea>
+                          {% if comment_form.body.errors %}
+                              <div class="text-danger">{{ comment_form.body.errors }}</div>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col form-group">
+                          {{ comment_form.captcha }}
+                          {% if comment_form.captcha.errors %}
+                              <div class="text-danger">{{ comment_form.captcha.errors }}</div>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Post Comment</button>
+              </form>
           </div>
         </div><!-- End blog comments -->
       </div>
       <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
         <div class="sidebar ps-lg-4">
-          <div class="sidebar-item search-form">
-            <h3 class="sidebar-title">Search</h3>
-            <form action="" class="mt-3">
-              <input type="text">
-              <button type="submit"><i class="bi bi-search"></i></button>
-            </form>
-          </div><!-- End sidebar search form-->
 
           <div class="sidebar-item categories">
               <h3 class="sidebar-title">Categories</h3>
               <ul class="mt-3">
                   {% for category in categories %}
-                      <li><a href="/category/{{ category.category_name }}/">{{ category.category_name }} <span>({{ category.article_count }})</span></a></li>
+                      {% if category.article_count %}
+                        <li><a href="/category/{{ category.category_name }}/">{{ category.category_name }} <span>({{ category.article_count }})</span></a></li>
+                      {% endif %}
                   {% endfor %}
               </ul>
           </div><!-- End sidebar categories-->
@@ -165,7 +168,7 @@
               <div class="post-item mt-3">
                 <img src="{{ recent_post.image.url }}" alt="" class="flex-shrink-0">
                 <div>
-                  <h4><a href="{% url 'article_detail' recent_post.article_slug %}">{{ recent_post.article_title_h1 }}</a></h4>
+                  <h4><a href="{% url 'article_detail' recent_post.article_slug %}">{{ recent_post.article_title_h1|truncatewords:3 }}</a></h4>
                   <time datetime="{{ recent_post.article_date }}">{{ recent_post.article_date|date:"d M, Y" }}</time>
                 </div>
               </div><!-- End recent post item-->

@@ -24,10 +24,10 @@ class WhyChooseMeSlider(models.Model):
         return self.title
 
 class Footer(models.Model):
+    call = models.CharField(max_length=255, default="")
     base_content = models.TextField(default="")
     location = models.CharField(max_length=255, default="")
     email = models.EmailField(max_length=255, default="")
-    call = models.CharField(max_length=255, default="")
     twitter_url = models.URLField(max_length=255, default="")
     facebook_url = models.URLField(max_length=255, default="")
     instagram_url = models.URLField(max_length=255, default="")

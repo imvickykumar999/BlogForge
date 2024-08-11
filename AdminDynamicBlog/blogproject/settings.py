@@ -26,20 +26,25 @@ SECRET_KEY = 'django-insecure-&-m_e4aa_4cz7o2f!ceqv-hn9xgi%@*r(v*p@4f+5pai)riehy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+RECAPTCHA_PUBLIC_KEY = '6LeQ4CIqAAAAAP88BRM0rWmzFOZnr6CaboyZ6Dde'
+RECAPTCHA_PRIVATE_KEY = '6LeQ4CIqAAAAAK6nBzqkFL9hEJMcuhb86T3o5BC7'
+
 ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
+    'django_recaptcha',
+    'blog',
+    'ckeditor',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',    
-    'blog',
-    'ckeditor',
 ]
 
 MIDDLEWARE = [
