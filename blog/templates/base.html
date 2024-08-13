@@ -44,6 +44,93 @@
   <meta name="google-adsense-account" content="ca-pub-8191146460815779">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8191146460815779"
   crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+      .social-share-bar {
+          position: fixed;
+          left: 10px;
+          top: 30%;
+          z-index: 1000;
+      }
+
+      .social-icons {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+
+      .social-icons a {
+          display: block;
+          width: 40px;
+          height: 40px;
+          margin: 5px 0;
+          background-color: transparent; /* No background color */
+          color: #fff;
+          text-align: center;
+          line-height: 40px;
+          transition: transform 0.3s ease;
+      }
+
+      .social-icons a.facebook i {
+          color: #3b5998; /* Facebook blue */
+      }
+
+      .social-icons a.pinterest i {
+          color: #bd081c; /* Pinterest red */
+      }
+
+      .social-icons a.twitter i {
+          color: #1da1f2; /* Twitter/X blue */
+      }
+
+      .social-icons a.email i {
+          color: #000000; /* Black for email */
+      }
+
+      .social-icons a.linkedin i {
+          color: #0077b5; /* LinkedIn blue */
+      }
+
+      .social-icons a.whatsapp i {
+          color: #25d366; /* WhatsApp green */
+      }
+
+      .social-icons a.telegram i {
+          color: #0088cc; /* Telegram blue */
+      }
+
+      .social-icons a.more i {
+          color: #ff6d01; /* Orange for more options */
+      }
+
+      .social-icons a:hover {
+          transform: scale(1.1); /* Slightly enlarge icon on hover */
+      }
+
+      .social-icons i {
+          font-size: 20px;
+          vertical-align: middle;
+      }
+
+      @media (max-width: 768px) {
+          .social-share-bar {
+              left: 0;
+              bottom: 0;
+              top: auto;
+              width: 100%;
+              background-color: #fff; /* Add a background color to the bar */
+          }
+          .social-icons {
+              flex-direction: row; /* Arrange icons in a row */
+              justify-content: space-around;
+              padding: 10px 0; /* Add padding */
+          }
+          .social-icons a {
+              margin: 0;
+          }
+      }
+  </style>
 </head>
 
 <body>

@@ -174,7 +174,7 @@ section {
   visibility: hidden;
   opacity: 0;
   right: 15px;
-  bottom: 15px;
+  bottom: 70px;
   z-index: 99999;
   background: var(--color-primary);
   width: 40px;
