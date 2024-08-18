@@ -16,6 +16,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.example.blogforge.ui.theme.BlogForgeTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var webView: WebView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,15 +26,25 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     WebViewContainer(
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    ) { webViewInstance ->
+                        webView = webViewInstance
+                    }
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
         }
     }
 }
 
 @Composable
-fun WebViewContainer(modifier: Modifier = Modifier) {
+fun WebViewContainer(modifier: Modifier = Modifier, onWebViewCreated: (WebView) -> Unit) {
     // URL of the website you want to display
     val websiteUrl = "https://blogforge.pythonanywhere.com/" // Replace with your URL
 
@@ -45,6 +57,9 @@ fun WebViewContainer(modifier: Modifier = Modifier) {
                 loadUrl(websiteUrl)
             }
         },
-        modifier = modifier
+        modifier = modifier,
+        update = {
+            onWebViewCreated(it)
+        }
     )
 }
