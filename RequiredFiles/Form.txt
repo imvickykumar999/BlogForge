@@ -1,0 +1,7 @@
+
+App name : Blog Forge
+
+Short description : User can ask for their blog to publish on our App
+
+Full description : To publish you blog on our App, go to Contact tab from side nav bar or Visit https://blogforge.pythonanywhere.com/contact/
+
